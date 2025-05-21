@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h2>{{ ticket.title }}</h2>
+<p><strong>ステータス:</strong> {{ ticket.get_status_display }}</p>
+<p><strong>担当者:</strong> {% for user in ticket.assignees.all %}{{ user.username }} {% empty %}なし{% endfor %}</p>
+
+<h4>添付ファイル</h4>
+<ul>
+  {% for a in attachments %}
+    <li><a href="{{ a.file.url }}">{{ a.file.name }}</a>（{{ a.uploaded_at }}）</li>
+  {% empty %}
+    <li>なし</li>
+  {% endfor %}
+</ul>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ attachment_form.as_p }}
+  <button name="attachment_submit" class="btn btn-sm btn-secondary">アップロード</button>
+</form>
+
+<h4>コメント</h4>
+<ul class="list-group mb-3">
+  {% for comment in comments %}
+    <li class="list-group-item"><strong>{{ comment.author }}</strong>: {{ comment.body }} <em>{{ comment.created_at }}</em></li>
+  {% empty %}
+    <li class="list-group-item">コメントなし</li>
+  {% endfor %}
+</ul>
+<form method="post">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <button name="comment_submit" class="btn btn-primary">コメント追加</button>
+</form>
+<a href="{% url 'ticket_list' %}" class="btn btn-secondary mt-3">← 戻る</a>
+{% endblock %}
