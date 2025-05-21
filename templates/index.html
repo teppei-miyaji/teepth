@@ -1,14 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Teepth</title>
-</head>
-<body>
-    <h1>Projects</h1>
-    <ul>
-    {% for project in projects %}
-        <li>{{ project.name }}</li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+
+{% block title %}プロジェクト一覧{% endblock %}
+
+{% block content %}
+<h2>プロジェクト一覧</h2>
+
+<div class="mb-3">
+    <a href="/admin/core/project/add/" class="btn btn-success">＋新しいプロジェクト</a>
+</div>
+
+{% if projects %}
+<table class="table table-hover table-bordered bg-white">
+    <thead class="table-light">
+        <tr>
+            <th>名前</th>
+            <th>説明</th>
+            <th>オーナー</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.description }}</td>
+            <td>{{ project.owner.username }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-info">プロジェクトがまだ登録されていません。</div>
+{% endif %}
+{% endblock %}
