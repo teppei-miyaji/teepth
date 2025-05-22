@@ -1,0 +1,9 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h2>ユーザープロファイル</h2>
+<ul>
+  <li>ユーザー名: {{ user.username }}</li>
+  <li>メール: {{ user.email }}</li>
+  <li>最終ログイン: {{ user.last_login }}</li>
+</ul>
+{% endblock %}

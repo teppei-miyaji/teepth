@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include  # ← include を必ずインポート
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls')),  # ← core.urls をルートに含める
+    path('', include('core.urls')),
+    path('', include('core.urls_api')),  # APIエンドポイント
 ]
